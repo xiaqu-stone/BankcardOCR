@@ -1,0 +1,72 @@
+apply plugin: 'com.android.library'
+//apply plugin: 'com.android.application'
+android {
+    compileSdkVersion conf.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion conf.minSdkVersion
+        targetSdkVersion conf.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    debugImplementation "com.android.support:appcompat-v7:$support"
+    debugImplementation "com.android.support.constraint:constraint-layout:$support"
+    debugImplementation "com.yanzhenjie:permission:$andPermissions"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.anko:anko-common:$anko"
+}
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+ext {
+    //Jcenter仓库名称
+    bintrayRepo = 'dsq'
+    //Jcenter中package库的名称
+    bintrayName = 'bankcard-ocr-lib'
+
+    publishedGroupId = 'com.stone.kuainiugroup'
+    //当前AS library module的name
+    libraryName = 'bankcard-ocr-lib'
+    //maven依赖路径的artifact，即中间字段
+    artifact = 'bankcard-ocr-lib'
+
+    /*注意：bintrayName，libraryName，artifact 以及AS 工程中的 library module name 最好保持一致。
+    *
+    * 可以肯定的是：依照此处的Bintray配置gradle脚本，后三者必须一致，否则会出现无法上传 或者 上传Jcenter后路径错误 或者 依赖路径下匹配不到响应的aar资源等问题
+    * */
+
+    //修改库的代码并发布新的版本时，请升级此处的版本
+    libraryVersion = '1.0.0'
+
+    //库功能的简述
+    libraryDescription = '银行卡OCR扫描，针对三方库的再封装打包'
+
+    siteUrl = 'https://github.com/xiaqu-stone/BankcardOCR'
+    gitUrl = 'https://github.com/xiaqu-stone/BankcardOCR.git'
+
+    developerId = 'stone'
+    developerName = 'xiaqu-stone'
+    developerEmail = 'stone.xiaqu@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+apply from: "../install.gradle"
+apply from: "../bintray.gradle"
